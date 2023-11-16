@@ -4,7 +4,7 @@ export default function Header() {
     return (
         <header>
             
-            <h1><a className="home" href="/">GamesPlay</a></h1>
+            <h1><Link className="home" to="/">GamesPlay</Link></h1>
             <nav>
                 <Link  to="/games">all games</Link>
                 
