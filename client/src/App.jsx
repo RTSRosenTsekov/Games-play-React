@@ -1,10 +1,17 @@
+import GameList from "./components/game-list/GameList";
 import Header from "./components/header/Header";
-
+import Home from "./components/home/Home";
+import { Routes, Route } from "react-router-dom";
 function App() {
   return (
     <div id="box">
-      <h1>Heloo Game Play</h1>
-      <Header/>
+      
+      <Header />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/games" element={<GameList/>}/>
+      </Routes>
     </div>
   );
 }
