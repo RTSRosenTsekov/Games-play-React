@@ -1,5 +1,9 @@
+import { Link } from "react-router-dom";
+
+
+/* eslint-disable react/prop-types */
 export default function GameListItem ({
-        
+        _id,
         title,
         category,
         imageUrl,
@@ -12,9 +16,9 @@ export default function GameListItem ({
                     <img src={imageUrl} />
                     <h6>{category}</h6>
                     <h2>{title}</h2>
-                    <a href="#" className="details-button">
+                    <Link to={`/games/${_id}`}className="details-button">
                       Details
-                    </a>
+                      </Link>
                 </div>
             </div>
         
