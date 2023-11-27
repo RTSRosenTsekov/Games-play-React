@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../contexts/authContext";
 import useForm from "../../hooks/useForm";
+import { login } from "../../services/authService";
 
 const RegisterFormkeys = {
   Email: "email",
@@ -15,7 +16,7 @@ export default function Register() {
     password: "",
     confirmPassword: "",
   });
-
+ console.log('jkjkk');
   return (
     <section id="register-page" className="content auth">
       <form id="register" onSubmit={onSubmit}>
