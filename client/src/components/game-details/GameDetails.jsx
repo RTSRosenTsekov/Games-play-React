@@ -1,10 +1,12 @@
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useMemo, useReducer, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import * as gameServices from "../../services/gameService";
 import * as commentService from "../../services/commentService";
 import AuthContext from "../../contexts/authContext";
 import reducer from "./commentReducer";
 import useForm from "../../hooks/useForm";
+import { pathToUrl } from "../../utils/pathUtils";
+import Path from "../../paths";
 
 export default function GameDetails() {
   const { email, userId } = useContext(AuthContext);
@@ -35,10 +37,12 @@ export default function GameDetails() {
       payload: newComment,
     });
   };
+  
+  const initialValues = useMemo(()=>({
+      comment:'',
+  }),[]);
 
-  const { values, onChange, onSubmit } = useForm(addCommentHandler, {
-    comment: "",
-  });
+  const { values, onChange, onSubmit } = useForm(addCommentHandler,initialValues);
 
   const isOwner =   userId === game._ownerId;
 
@@ -72,10 +76,10 @@ export default function GameDetails() {
 
         {isOwner && (
           <div className="buttons">
-            <Link to="#" className="button">
+            <Link to={pathToUrl(Path.GameEdit , {gameId})} className="button">
               Edit
             </Link>
-            <Link to="#" className="button">
+            <Link to="/games/:gameId/delete" className="button">
               Delete
             </Link>
           </div>
