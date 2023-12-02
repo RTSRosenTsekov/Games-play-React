@@ -38,14 +38,15 @@ export default function GameDetails() {
     });
   };
   
-  const initialValues = useMemo(()=>({
-      comment:'',
-  }),[]);
+  // const initialValues = useMemo(()=>({
+  //     comment:'',
+  // }),[]);
 
-  const { values, onChange, onSubmit } = useForm(addCommentHandler,initialValues);
+  const { values, onChange, onSubmit } = useForm(addCommentHandler,{comment:''});
 
   const isOwner =   userId === game._ownerId;
 
+  
   return (
     <section id="game-details">
       <h1>Game Details</h1>
