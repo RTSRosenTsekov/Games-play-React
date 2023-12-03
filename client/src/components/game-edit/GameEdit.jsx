@@ -37,12 +37,12 @@ export default function GameEdit() {
       [e.target.name]: e.target.value,
     }));
   };
- // Неконтролирана форма на edit
+ // контролирана форма на edit
   return (
     <section id="create-page" className="auth">
       <form id="create" onSubmit={editGameSubmitHandler}>
         <div className="container">
-          <h1>Create Game</h1>
+          <h1>Edit Game</h1>
           <label htmlFor="leg-title">Legendary title:</label>
           <input
             type="text"
