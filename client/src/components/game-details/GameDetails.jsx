@@ -7,13 +7,14 @@ import reducer from "./commentReducer";
 import useForm from "../../hooks/useForm";
 import { pathToUrl } from "../../utils/pathUtils";
 import Path from "../../paths";
-
+import { useNavigate } from "react-router-dom";
 export default function GameDetails() {
   const { email, userId } = useContext(AuthContext);
   const [game, setGame] = useState({});
   // const [comments, setComments] = useState([]);
   const [comments, dispatch] = useReducer(reducer, []);
   const { gameId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     gameServices.getOne(gameId).then(setGame);
@@ -37,6 +38,16 @@ export default function GameDetails() {
       payload: newComment,
     });
   };
+    
+    const onDeleteButtonClickHandler= async()=>{
+    const hasConfirmed = confirm(`Are you sure you want to delete ${game.title}`);
+        
+        if(hasConfirmed){
+           await gameServices.remove(gameId);
+           
+           navigate('/games');
+        }
+    };
   
   // const initialValues = useMemo(()=>({
   //     comment:'',
@@ -80,9 +91,10 @@ export default function GameDetails() {
             <Link to={pathToUrl(Path.GameEdit , {gameId})} className="button">
               Edit
             </Link>
-            <Link to="/games/:gameId/delete" className="button">
+            <Link to={`/games/:${gameId}/delete`} className="button">
               Delete
             </Link>
+            <button className="button" onClick={onDeleteButtonClickHandler}>Delete</button>
           </div>
         )}
       </div>

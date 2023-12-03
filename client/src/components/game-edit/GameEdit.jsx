@@ -1,63 +1,46 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from 'react';
-import useForm from '../../hooks/useForm';
-import * as gameService from '../../services/gameService';
-import {useNavigate, useParams} from 'react-router-dom';
+import { useEffect, useState } from "react";
+import useForm from "../../hooks/useForm";
+import * as gameService from "../../services/gameService";
+import { useNavigate, useParams } from "react-router-dom";
 export default function GameEdit() {
+  const navigate = useNavigate();
+  const [game, setGame] = useState({
+    title: "",
+    category: "",
+    maxLevel: "",
+    imageUrl: "",
+    summary: "",
+  });
+  const { gameId } = useParams();
 
-    const navigate = useNavigate();
-    const[game, setGame] = useState({
-        title:'',
-        category:'',
-        maxLevel:'',
-        imageUrl:'',
-        summary:'',
+  useEffect(() => {
+    gameService.getOne(gameId).then((result) => {
+      setGame(result);
     });
-    const{gameId} = useParams();
-    
-    useEffect(()=>{
-        gameService.getOne(gameId)
-        .then(result=>{
-            setGame(result);
-        });
-    
-    },[gameId]);
-  const editGameSubmitHandler = async(e) => {
+  }, [gameId]);
+  const editGameSubmitHandler = async (e) => {
     e.preventDefault();
 
-        const values = Object.fromEntries(new FormData(e.currentTarget));
+    const values = Object.fromEntries(new FormData(e.currentTarget));
     try {
-        await gameService.edit(gameId,values);
-        navigate('/games');
+      await gameService.edit(gameId, values);
+      navigate("/games");
     } catch (err) {
-        console.log(err);
+      console.log(err);
     }
-   
-    
-  }
-
-    // const {values, onChange,onSubmit}= useForm(editGameSubmitHandler , game
-    // // {
-    // //     title:'',
-    // //     category:'',
-    // //     maxLevel:'',
-    // //     imageUrl:'',
-    // //     summary:'',
-        
-    // // }
-    
-    // );
-    
-    const onChange = (e) => {
-      setGame(state => ({
-          ...state,
-          [e.target.name]: e.target.value
-      }));
   };
-    
+
+  const onChange = (e) => {
+    setGame((state) => ({
+      ...state,
+      [e.target.name]: e.target.value,
+    }));
+  };
+ // Неконтролирана форма на edit
   return (
     <section id="create-page" className="auth">
-      <form id="create"  onSubmit={editGameSubmitHandler}>
+      <form id="create" onSubmit={editGameSubmitHandler}>
         <div className="container">
           <h1>Create Game</h1>
           <label htmlFor="leg-title">Legendary title:</label>
@@ -102,7 +85,12 @@ export default function GameEdit() {
           />
 
           <label htmlFor="summary">Summary:</label>
-          <textarea name="summary" value={game.summary} onChange={onChange} id="summary"></textarea>
+          <textarea
+            name="summary"
+            value={game.summary}
+            onChange={onChange}
+            id="summary"
+          ></textarea>
           <input className="btn submit" type="submit" value="Edit Game" />
         </div>
       </form>
