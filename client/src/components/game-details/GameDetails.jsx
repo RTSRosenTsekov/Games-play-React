@@ -8,6 +8,8 @@ import useForm from "../../hooks/useForm";
 import { pathToUrl } from "../../utils/pathUtils";
 import Path from "../../paths";
 import { useNavigate } from "react-router-dom";
+
+
 export default function GameDetails() {
   const { email, userId } = useContext(AuthContext);
   const [game, setGame] = useState({});
